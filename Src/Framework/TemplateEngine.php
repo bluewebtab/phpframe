@@ -16,8 +16,15 @@ class TemplateEngine
 
 
         extract($data, EXTR_SKIP);
+        ob_start();
         //basePath is from the argument that was added in the HomeController
         //when the TemplateEngine is instantiated
         include "{$this->basePath}/{$template}";
+
+        $output = ob_get_contents();
+
+        ob_end_clean();
+
+        return $output;
     }
 }
