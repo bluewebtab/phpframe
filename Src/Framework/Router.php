@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 namespace Framework;
 
 
-class Router 
+class Router
 {
     private array $routes = [];
 
@@ -17,7 +17,6 @@ class Router
             'method' => strtoupper($method),
             'controller' => $controller
         ];
-
     }
 
     private function normalizePath(string $path): string
@@ -27,6 +26,8 @@ class Router
 
         $path = preg_replace('#[/]{2,}#', '/', $path);
 
+
+
         return $path;
     }
 
@@ -35,6 +36,28 @@ class Router
         $path = $this->normalizePath($path);
         $method = strtoupper($method);
 
-        echo $path . $method;
+
+
+
+
+        foreach ($this->routes as $route) {
+
+
+
+
+            if (
+                !preg_match("#^{$route['path']}$#", $path) ||
+                $route['method'] !== $method
+            ) {
+                continue;
+            }
+
+            [$class, $function] = $route['controller'];
+
+
+
+            $controlllerInstance = new $class;
+            $controlllerInstance->{$function}();
+        }
     }
 }
