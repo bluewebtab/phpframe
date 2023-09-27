@@ -21,7 +21,8 @@ class AboutController
     {
 
         echo $this->view->render('about.php', [
-            'title' => 'About page'
+            'title' => 'About page',
+            'dangerousData' => '<script>alert(123)</script>'
         ]);
     }
 }
