@@ -13,6 +13,8 @@ use function App\Config\registerRoutes;
 
 $app = new App(Paths::SOURCE . "App/container-definitions.php");
 
+
+
 registerRoutes($app);
 
 return $app;
