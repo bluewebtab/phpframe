@@ -59,11 +59,13 @@ class Router
 
 
 
-            $controlllerInstance = $container ? $container->resolve($class) : new $class;
+            $controllerInstance = $container ? $container->resolve($class) : new $class;
 
 
 
-            $action = fn () => $controlllerInstance->{$function}();
+            $action = fn () => $controllerInstance->{$function}();
+
+
 
             foreach ($this->middlewares as $middleware) {
                 $middlewareInstance = $container ? $container->resolve($middleware) : new $middleware;
