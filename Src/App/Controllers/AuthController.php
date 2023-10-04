@@ -25,8 +25,9 @@ class AuthController
         ]);
     }
 
+    //This method is going to responsible for processing the form submission request initiated by the user.
     public function register()
     {
-        dd($_POST);
+        $this->validatorService->validateRegister($_POST);
     }
 }
