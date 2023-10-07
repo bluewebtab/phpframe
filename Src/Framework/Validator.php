@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace Framework;
 
 use Framework\Contracts\RuleInterface;
+use Framework\Exceptions\ValidationException;
 
 class Validator
 {
@@ -17,6 +18,9 @@ class Validator
     }
     public function validate(array $formData, array $fields)
     {
+
+        $errors = [];
+
         foreach ($fields as $fieldName => $rules) {
             foreach ($rules as $rule) {
                 $ruleValidator = $this->rules[$rule];
@@ -25,8 +29,13 @@ class Validator
                     continue;
                 }
 
-                echo "Error";
+                //The empty bracket adds an auto increment index to an array. The new index will be +1 to the last index.
+                $errors[$fieldName][] = $ruleValidator->getMessage($formData, $fieldName, []);
             }
+        }
+
+        if (count($errors)) {
+            throw new ValidationException();
         }
     }
 }
