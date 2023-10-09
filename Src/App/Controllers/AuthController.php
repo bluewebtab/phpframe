@@ -19,10 +19,7 @@ class AuthController
     public function registerView()
     {
 
-        echo $this->view->render('register.php', [
-            'title' => 'Register page'
-
-        ]);
+        echo $this->view->render('register.php');
     }
 
     //This method is going to responsible for processing the form submission request initiated by the user.
