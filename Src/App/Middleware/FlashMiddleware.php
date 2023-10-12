@@ -24,8 +24,12 @@ class FlashMiddleware implements MiddlewareInterface
         $this->view->addGlobal('errors', $_SESSION['errors'] ?? []);
 
 
+
         //unset is defined by php and it can destroy variables or specific items in an array.
         unset($_SESSION['errors']);
+        $this->view->addGlobal('oldFormData', $_SESSION['oldFormData'] ?? []);
+
+        unset($_SESSION['oldFormData']);
         $next();
     }
 }
