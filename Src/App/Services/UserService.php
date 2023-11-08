@@ -25,7 +25,7 @@ class UserService
         )->count();
 
         if ($emailCount > 0) {
-            throw new ValidationException(['email' => 'Email taken']);
+            throw new ValidationException(['email' => ['Email is taken']]);
         }
     }
 
@@ -44,5 +44,19 @@ class UserService
                 'url' => $formData['socialMediaURL']
             ]
         );
+    }
+
+    public function login(array $formData)
+    {
+        $user = $this->db->query("SELECT * FROM users WHERE email = :email", [
+            'email' => $formData['email']
+        ])->find();
+        $passwordsMatch = password_verify($formData['password'], $user['password'] ?? '');
+
+        if (!$user || !$passwordsMatch) {
+            throw new ValidationException(['password' => ['Invalid credentials']]);
+        }
+
+        $_SESSION['user'] = $user['id'];
     }
 }
